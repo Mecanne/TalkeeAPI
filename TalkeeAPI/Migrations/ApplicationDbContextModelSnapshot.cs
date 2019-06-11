@@ -36,6 +36,32 @@ namespace TalkeeAPI.Migrations
                     b.ToTable("Comentarios");
                 });
 
+            modelBuilder.Entity("TalkeeAPI.Models.Followers", b =>
+                {
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FollowerID");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("Followers");
+                });
+
+            modelBuilder.Entity("TalkeeAPI.Models.Follows", b =>
+                {
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FollowID");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("Follows");
+                });
+
             modelBuilder.Entity("TalkeeAPI.Models.PostModel", b =>
                 {
                     b.Property<int>("PostID")
@@ -49,6 +75,8 @@ namespace TalkeeAPI.Migrations
                     b.Property<int>("UserID");
 
                     b.Property<int>("likes");
+
+                    b.Property<string>("type");
 
                     b.HasKey("PostID");
 

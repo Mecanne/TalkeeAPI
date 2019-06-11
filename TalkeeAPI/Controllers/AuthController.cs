@@ -53,7 +53,8 @@ namespace TalkeeAPI.Controllers
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                var userjson = Newtonsoft.Json.JsonConvert.SerializeObject(userLogin);
+                return Ok(new { Token = tokenString, userlog = userjson });
             }
             else
             {

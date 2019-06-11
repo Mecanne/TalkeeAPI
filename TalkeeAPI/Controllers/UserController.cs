@@ -12,7 +12,6 @@ namespace WebApplication.api.Controllers
 {
     
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -51,7 +50,7 @@ namespace WebApplication.api.Controllers
 
         // GET: api/User/{email}
         [HttpGet("{email}")]
-        public async Task<IActionResult> GetUserModel([FromRoute] string email)
+        public IActionResult GetUserModel([FromRoute] string email)
         {
             if (!ModelState.IsValid)
             {
