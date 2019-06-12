@@ -106,7 +106,9 @@ namespace TalkeeAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var posts = _context.Posts.Where(post => post.UserID == UserID).ToList();
+            //var posts = _context.Posts.Where(post => post.UserID == UserID).Select(i => new { i.Content,i.Date,i.PostID,i.UserID,i.type,i.likes }).ToList().OrderBy(u => u.PostID);
+
+            var posts = from post in _context.Posts where post.UserID == UserID orderby post.Date descending select post;
 
             return Ok(posts);
         }
