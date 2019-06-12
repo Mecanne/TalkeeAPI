@@ -99,7 +99,8 @@ namespace WebApplication.api.Controllers
                 }
             }
 
-            return NoContent();
+            var userjson = Newtonsoft.Json.JsonConvert.SerializeObject(userModel);
+            return Ok(new { userlog = userjson });
         }
 
         // POST: api/User
