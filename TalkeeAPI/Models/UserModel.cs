@@ -14,5 +14,6 @@ namespace TalkeeAPI.Models
         public string Password { get; set; }
         public string UserName { get; set; }
         public string Description { get; set; }
+        public string urlImagen { get; set; }
     }
 }
