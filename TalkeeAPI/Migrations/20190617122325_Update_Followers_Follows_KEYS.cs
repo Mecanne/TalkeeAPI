@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TalkeeAPI.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Update_Followers_Follows_KEYS : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,26 +12,28 @@ namespace TalkeeAPI.Migrations
                 name: "Followers",
                 columns: table => new
                 {
+                    FollowID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserID = table.Column<int>(nullable: false),
                     FollowerID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Followers", x => new { x.UserID, x.FollowerID });
-                    table.UniqueConstraint("AK_Followers_UserID", x => x.UserID);
+                    table.PrimaryKey("PK_Followers", x => x.FollowID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Follows",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false),
                     FollowID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<int>(nullable: false),
+                    FollowedID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Follows", x => new { x.UserID, x.FollowID });
-                    table.UniqueConstraint("AK_Follows_UserID", x => x.UserID);
+                    table.PrimaryKey("PK_Follows", x => x.FollowID);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,7 +63,7 @@ namespace TalkeeAPI.Migrations
                     Password = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    urlImagen = table.Column<string>(nullable: true, defaultValue: "'picsum.photos/400'")
+                    urlImagen = table.Column<string>(nullable: true, defaultValue: "https://picsum.photos/400")
                 },
                 constraints: table =>
                 {

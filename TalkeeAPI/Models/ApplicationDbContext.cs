@@ -21,13 +21,7 @@ namespace TalkeeAPI.Models
         {
             modelBuilder.Entity<UserModel>()
                 .Property(u => u.urlImagen)
-                .HasDefaultValue("'picsum.photos/400'");
-
-            modelBuilder.Entity<Followers>()
-            .HasKey(f => new { f.UserID, f.FollowerID });
-
-            modelBuilder.Entity<Follows>()
-            .HasKey(f => new { f.UserID, f.FollowID });
+                .HasDefaultValue("https://picsum.photos/400");
         }
 
         public DbSet<UserModel> Users { get; set; }

@@ -21,26 +21,30 @@ namespace TalkeeAPI.Migrations
 
             modelBuilder.Entity("TalkeeAPI.Models.Followers", b =>
                 {
-                    b.Property<int>("UserID");
+                    b.Property<int>("FollowID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("FollowerID");
 
-                    b.HasKey("UserID", "FollowerID");
+                    b.Property<int>("UserID");
 
-                    b.HasAlternateKey("UserID");
+                    b.HasKey("FollowID");
 
                     b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("TalkeeAPI.Models.Follows", b =>
                 {
+                    b.Property<int>("FollowID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FollowedID");
+
                     b.Property<int>("UserID");
 
-                    b.Property<int>("FollowID");
-
-                    b.HasKey("UserID", "FollowID");
-
-                    b.HasAlternateKey("UserID");
+                    b.HasKey("FollowID");
 
                     b.ToTable("Follows");
                 });
@@ -82,7 +86,7 @@ namespace TalkeeAPI.Migrations
 
                     b.Property<string>("urlImagen")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue("'picsum.photos/400'");
+                        .HasDefaultValue("https://picsum.photos/400");
 
                     b.HasKey("UserID");
 

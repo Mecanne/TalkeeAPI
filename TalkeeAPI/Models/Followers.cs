@@ -9,6 +9,7 @@ namespace TalkeeAPI.Models
     public class Followers
     {
         [Key]
+        public int FollowID { get; set; }
         public int UserID { get; set; }
         public int FollowerID { get; set; }
     }

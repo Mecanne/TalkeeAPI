@@ -9,7 +9,8 @@ namespace TalkeeAPI.Models
     public class Follows
     {
         [Key]
-        public int UserID { get; set; }
         public int FollowID { get; set; }
+        public int UserID { get; set; }
+        public int FollowedID { get; set; }
     }
 }
