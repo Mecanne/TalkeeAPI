@@ -30,15 +30,60 @@ namespace WebApplication.api.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserModel([FromRoute] int id)
+        [HttpGet]
+        [Route("byid")]
+        public IActionResult GetUserByIDModel(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userModel = await _context.Users.FindAsync(id);
+            var userModel = from user in _context.Users
+                            where user.UserID.Equals(id)
+                            select user;
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userModel);
+        }
+
+        [HttpGet]
+        [Route("followers")]
+        public IActionResult GetFollowers(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userModel = from user in _context.Followers
+                            where user.UserID.Equals(id)
+                            select user;
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userModel);
+        }
+
+        [HttpGet]
+        [Route("follows")]
+        public IActionResult GetFollows(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userModel = from user in _context.Followers
+                            where user.UserID.Equals(id)
+                            select user;
 
             if (userModel == null)
             {
@@ -58,6 +103,28 @@ namespace WebApplication.api.Controllers
             }
 
             var userModel = _context.Users.Where(u => u.Email == email).ToList().FirstOrDefault();
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userModel);
+        }
+
+        // GET: api/User/{}
+        [HttpGet]
+        [Route("search")]
+        public IActionResult SearchUsers(string q)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userModel = from user in _context.Users
+                            where user.UserName.Contains(q)
+                            select user;
 
             if (userModel == null)
             {

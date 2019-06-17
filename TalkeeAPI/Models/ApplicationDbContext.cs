@@ -17,9 +17,21 @@ namespace TalkeeAPI.Models
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+                .Property(u => u.urlImagen)
+                .HasDefaultValue("'picsum.photos/400'");
+
+            modelBuilder.Entity<Followers>()
+            .HasKey(f => new { f.UserID, f.FollowerID });
+
+            modelBuilder.Entity<Follows>()
+            .HasKey(f => new { f.UserID, f.FollowID });
+        }
+
         public DbSet<UserModel> Users { get; set; }
         public DbSet<PostModel> Posts { get; set; }
-        public DbSet<ComentarioModel> Comentarios { get; set; }
         public DbSet<Followers> Followers { get; set; }
         public DbSet<Follows> Follows { get; set; }
 

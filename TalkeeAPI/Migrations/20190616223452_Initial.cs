@@ -9,44 +9,29 @@ namespace TalkeeAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Comentarios",
-                columns: table => new
-                {
-                    ComentarioID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserID = table.Column<int>(nullable: false),
-                    PostID = table.Column<int>(nullable: false),
-                    Comentario = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comentarios", x => x.ComentarioID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Followers",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<int>(nullable: false),
                     FollowerID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Followers", x => x.UserID);
+                    table.PrimaryKey("PK_Followers", x => new { x.UserID, x.FollowerID });
+                    table.UniqueConstraint("AK_Followers_UserID", x => x.UserID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Follows",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<int>(nullable: false),
                     FollowID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Follows", x => x.UserID);
+                    table.PrimaryKey("PK_Follows", x => new { x.UserID, x.FollowID });
+                    table.UniqueConstraint("AK_Follows_UserID", x => x.UserID);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +60,8 @@ namespace TalkeeAPI.Migrations
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    urlImagen = table.Column<string>(nullable: true, defaultValue: "'picsum.photos/400'")
                 },
                 constraints: table =>
                 {
@@ -85,9 +71,6 @@ namespace TalkeeAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Comentarios");
-
             migrationBuilder.DropTable(
                 name: "Followers");
 

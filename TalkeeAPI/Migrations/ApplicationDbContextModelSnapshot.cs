@@ -19,45 +19,28 @@ namespace TalkeeAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TalkeeAPI.Models.ComentarioModel", b =>
-                {
-                    b.Property<int>("ComentarioID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Comentario");
-
-                    b.Property<int>("PostID");
-
-                    b.Property<int>("UserID");
-
-                    b.HasKey("ComentarioID");
-
-                    b.ToTable("Comentarios");
-                });
-
             modelBuilder.Entity("TalkeeAPI.Models.Followers", b =>
                 {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("UserID");
 
                     b.Property<int>("FollowerID");
 
-                    b.HasKey("UserID");
+                    b.HasKey("UserID", "FollowerID");
+
+                    b.HasAlternateKey("UserID");
 
                     b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("TalkeeAPI.Models.Follows", b =>
                 {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("UserID");
 
                     b.Property<int>("FollowID");
 
-                    b.HasKey("UserID");
+                    b.HasKey("UserID", "FollowID");
+
+                    b.HasAlternateKey("UserID");
 
                     b.ToTable("Follows");
                 });
@@ -97,7 +80,9 @@ namespace TalkeeAPI.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<string>("urlImagen");
+                    b.Property<string>("urlImagen")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue("'picsum.photos/400'");
 
                     b.HasKey("UserID");
 
