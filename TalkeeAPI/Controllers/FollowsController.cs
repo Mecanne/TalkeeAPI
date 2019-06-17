@@ -36,7 +36,11 @@ namespace TalkeeAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var follows = await _context.Follows.FindAsync(id);
+            var follows = from user in _context.Users
+                            join follow in _context.Follows
+                            on user.UserID equals follow.FollowedID
+                            where follow.UserID == id
+                            select user;
 
             if (follows == null)
             {

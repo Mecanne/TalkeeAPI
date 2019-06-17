@@ -29,14 +29,18 @@ namespace TalkeeAPI.Controllers
 
         // GET: api/Followers/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFollowers([FromRoute] int id)
+        public IActionResult GetFollowers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var followers = await _context.Followers.FindAsync(id);
+            var followers = from user in _context.Users
+                            join follower in _context.Followers
+                            on user.UserID equals follower.FollowerID
+                            where follower.UserID == id
+                            select user;
 
             if (followers == null)
             {
