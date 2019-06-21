@@ -28,6 +28,7 @@ namespace TalkeeAPI.Models
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<Followers> Followers { get; set; }
         public DbSet<Follows> Follows { get; set; }
+        public DbSet<FollowModel> Follow { get; set; }
 
     }
 }

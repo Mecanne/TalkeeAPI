@@ -38,7 +38,7 @@ namespace TalkeeAPI.Controllers
 
             var followers = from user in _context.Users
                             join follower in _context.Followers
-                            on user.UserID equals follower.FollowerID
+                            on user.UserID equals follower.UserID
                             where follower.UserID == id
                             select user;
 

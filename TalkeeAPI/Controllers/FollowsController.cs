@@ -29,7 +29,7 @@ namespace TalkeeAPI.Controllers
 
         // GET: api/Follows/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFollows([FromRoute] int id)
+        public IActionResult GetFollows([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -37,10 +37,10 @@ namespace TalkeeAPI.Controllers
             }
 
             var follows = from user in _context.Users
-                            join follow in _context.Follows
-                            on user.UserID equals follow.FollowedID
-                            where follow.UserID == id
-                            select user;
+                          join follow in _context.Follows
+                          on user.UserID equals follow.UserID
+                          where follow.UserID == id
+                          select user;
 
             if (follows == null)
             {

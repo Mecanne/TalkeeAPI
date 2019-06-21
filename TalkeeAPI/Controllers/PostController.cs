@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TalkeeAPI.Models;
 
 namespace TalkeeAPI.Controllers
@@ -22,9 +20,23 @@ namespace TalkeeAPI.Controllers
 
         // GET: api/Post
         [HttpGet]
-        public IEnumerable<PostModel> GetPosts()
+        public IActionResult GetPosts()
         {
-            return _context.Posts;
+            var posts = from post in _context.Posts
+                        join user in _context.Users
+                        on post.UserID equals user.UserID
+                        orderby post.Date descending
+                        select new
+                        {
+                            UserID = post.UserID,
+                            UserName = user.UserName,
+                            Content = post.Content,
+                            Date = post.Date,
+                            PostID = post.PostID,
+                            Url = user.urlImagen
+                        };
+
+            return Ok(posts);
         }
 
         // GET: api/Post/5
