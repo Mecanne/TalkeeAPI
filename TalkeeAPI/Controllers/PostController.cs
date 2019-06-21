@@ -58,6 +58,28 @@ namespace TalkeeAPI.Controllers
             return Ok(postModel);
         }
 
+        [HttpGet("follow/{id}")]
+        public IActionResult GetFollowPost([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var postModel = from post in _context.Posts
+                            join follow in _context.Follow
+                            on post.UserID equals follow.FollowID
+                            where post.UserID == id
+                            select post;
+
+            if (postModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(postModel);
+        }
+
         // PUT: api/Post/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPostModel([FromRoute] int id, [FromBody] PostModel postModel)
